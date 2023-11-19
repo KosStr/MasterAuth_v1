@@ -19,7 +19,7 @@ namespace MasterAuth.Business.Services.Implementations
 
         #region Constructor
 
-        public AccountService(IUnitOfWork unitOfWork, JwtSettings jwtSettings, IEmailHelper emailHelper) : base(unitOfWork)
+        public AccountService(IUnitOfWork unitOfWork, IEmailHelper emailHelper) : base(unitOfWork)
         {
             //_jwtSettings = jwtSettings;
             _emailHelper = emailHelper;

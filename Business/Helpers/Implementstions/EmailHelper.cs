@@ -48,6 +48,7 @@ namespace Business.Helpers.Implementstions
             return await _fluentEmail
                 .To(user.Email)
                 .Subject("Registration confirm")
+                .UsingTemplateFromEmbedded(Constants.EmailTemplates.RegistrationMailPath, letter, Assembly.GetEntryAssembly())
                 .SendAsync();
         }
 

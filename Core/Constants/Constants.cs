@@ -10,8 +10,8 @@
 
         public class EmailTemplates
         {
-            public const string RegistrationMailPath = "MasterAuth.Core.EmailTemplates.RegistrationMail.cshtml";
-            public const string ChangePasswordMailPath = "MasterAuth.Core.EmailTemplates.PasswordChangeMail.cshtml";
+            public const string RegistrationMailPath = "MasterAuth.EmailTemplates.RegistrationMail.cshtml";
+            public const string ChangePasswordMailPath = "MasterAuth.EmailTemplates.PasswordChangeMail.cshtml";
         }
 
         #endregion

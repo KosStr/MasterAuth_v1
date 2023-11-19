@@ -52,12 +52,12 @@ namespace MasterAuth.Controllers.v1.Account
             return Ok();
         }
 
-        //[HttpPost("confirm/{registerToken}"), AllowAnonymous]
-        //public async Task<IActionResult> ConfirmRegistrationAsync(string registerToken)
-        //{
-        //    await _accountService.ConfirmRegistrationAsync(registerToken);
-        //    return Ok();
-        //}
+        [HttpPost("confirm/{registerToken}"), AllowAnonymous]
+        public async Task<IActionResult> ConfirmRegistrationAsync(string registerToken)
+        {
+            await _accountService.ConfirmRegistrationAsync(registerToken);
+            return Ok();
+        }
 
         //[HttpPost("resfresh")]
         //public async Task<IActionResult> UpdateRefreshAsync([FromBody] TokenUpdateDto tokens)
