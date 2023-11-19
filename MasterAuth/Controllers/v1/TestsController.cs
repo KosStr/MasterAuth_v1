@@ -1,7 +1,7 @@
 ﻿using FluentEmail.Core;
-using MasterAuth.Business.Services.Interfaces;
+using MasterAuth.Attributes;
 using Microsoft.AspNetCore.Mvc;
-using Schedule.Attributes;
+
 
 namespace MasterAuth.Controllers.v1
 {
@@ -11,16 +11,16 @@ namespace MasterAuth.Controllers.v1
     {
         #region Properties
 
-        private readonly IAccountService _accountService;
+        //private readonly IAccountService _accountService;
         private readonly IFluentEmail _fluentEmail;
 
         #endregion
 
         #region Constructor
 
-        public TestsController(IAccountService accountService, IFluentEmail fluentEmail)
+        public TestsController(IFluentEmail fluentEmail)
         {
-            _accountService = accountService;
+            //_accountService = accountService;
             _fluentEmail = fluentEmail;
         }
 
@@ -34,9 +34,9 @@ namespace MasterAuth.Controllers.v1
             var confirmationString = Guid.NewGuid().ToString();
 
             var a = await _fluentEmail
-               .To("gradkep@gmail.com")
-               .Subject("Registration confirm")
-               .Body(confirmationString)
+               .To("romanyanchuk14@gmail.com")
+               .Subject("SMTP Test")
+               .Body("Do you smoke chesh?)")
                .SendAsync();
 
             return Ok(a);

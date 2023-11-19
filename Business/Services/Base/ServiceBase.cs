@@ -2,7 +2,7 @@
 
 namespace MasterAuth.Business.Services.Base
 {
-    internal abstract class ServiceBase : IDisposable
+    public abstract class ServiceBase : IDisposable
     {
         #region Properties
 

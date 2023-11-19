@@ -1,14 +1,11 @@
-﻿using Microsoft.AspNetCore.Builder;
-using Schedule.Middleware;
-
-namespace Schedule.Extensions
+﻿namespace MasterAuth.Extensions
 {
     public static class MiddlewareHandlerExtension
     {
-        public static IApplicationBuilder UseMiddlewareHandler(this IApplicationBuilder builder) =>
-            builder.UseMiddleware<ExceptionMiddleware>();
+        //public static IApplicationBuilder UseMiddlewareHandler(this IApplicationBuilder builder) =>
+        //    builder.UseMiddleware<ExceptionMiddleware>();
 
-        public static IApplicationBuilder UseRefreshTokenHandler(this IApplicationBuilder builder) =>
-            builder.UseMiddleware<RefreshTokenMiddleware>();
+        //public static IApplicationBuilder UseRefreshTokenHandler(this IApplicationBuilder builder) =>
+        //    builder.UseMiddleware<RefreshTokenMiddleware>();
     }
 }

@@ -1,9 +1,9 @@
 using Autofac;
+using Autofac.Extensions.DependencyInjection;
 using MasterAuth.Business.Modules;
 using MasterAuth.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
-var containerBuilder = new ContainerBuilder();
 
 // Add services to the container.
 builder.Services.AddRazorPages();
@@ -15,12 +15,17 @@ builder.Services.AddEndpointsApiExplorer();
 builder.AddDatabaseContext();
 builder.AddSwagger();
 builder.AddSingletons();
+builder.AddEmail();
 
 #endregion
 
 #region Modules Registration
 
-containerBuilder.RegisterModule(new BusinessModule());
+builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory())
+    .ConfigureContainer<ContainerBuilder>(builder =>
+    {
+        builder.RegisterModule(new BusinessModule());
+    });
 
 #endregion
 

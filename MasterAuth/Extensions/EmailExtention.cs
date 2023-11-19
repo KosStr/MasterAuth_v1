@@ -2,7 +2,7 @@
 using System.Net;
 using System.Net.Mail;
 
-namespace Schedule.Extensions
+namespace MasterAuth.Extensions
 {
     public static class EmailExtention
     {
@@ -11,7 +11,7 @@ namespace Schedule.Extensions
             var emailConfig = builder.Services.BuildServiceProvider()
                 .GetRequiredService<EmailConfig>();
 
-            services.AddFluentEmail(emailConfig.Email)
+            builder.Services.AddFluentEmail(emailConfig.Email)
                 .AddRazorRenderer()
                 .AddSmtpSender(new SmtpClient(emailConfig.Host, emailConfig.Port)
                 {
@@ -20,6 +20,5 @@ namespace Schedule.Extensions
                     DeliveryMethod = SmtpDeliveryMethod.Network,
                 });
         }
-
     }
 }

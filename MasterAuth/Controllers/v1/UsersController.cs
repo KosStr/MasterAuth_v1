@@ -1,6 +1,6 @@
-﻿using MasterAuth.Business.Services.Interfaces;
+﻿using MasterAuth.Attributes;
+using MasterAuth.Business.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using Schedule.Attributes;
 
 namespace MasterAuth.Controllers.v1
 {

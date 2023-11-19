@@ -1,77 +1,82 @@
-﻿using MasterAuth.Business.Services.Base;
+﻿using MasterAuth.Business.Helpers.Interfaces;
+using MasterAuth.Business.Services.Base;
+using MasterAuth.Business.Services.Interfaces;
+using MasterAuth.Core.Configurations;
+using MasterAuth.Core.DTO.Account;
+using MasterAuth.Core.Entities.Account;
 using MasterAuth.Database.Repository.Interfaces;
 
 namespace MasterAuth.Business.Services.Implementations
 {
-    internal class AccountService : ServiceBase
+    internal class AccountService : ServiceBase, IAccountService
     {
         #region Properties
 
         //private readonly JwtSettings _jwtSettings;
-        //private readonly IEmailHelper _emailHelper;
+        private readonly IEmailHelper _emailHelper;
 
         #endregion
 
         #region Constructor
 
-        public AccountService(IUnitOfWork unitOfWork) : base(unitOfWork)
+        public AccountService(IUnitOfWork unitOfWork, JwtSettings jwtSettings, IEmailHelper emailHelper) : base(unitOfWork)
         {
             //_jwtSettings = jwtSettings;
-            //_emailHelper = emailHelper;
+            _emailHelper = emailHelper;
         }
 
         #endregion
 
-        //#region Interface Members
+        #region Interface Members
 
-        //public async Task RegisterAsync(RegisterDto registerModel, CancellationToken cancellationToken = default)
-        //{
-        //    if (await UnitOfWork.Repository<User>().ExistAsync(i => i.Email == registerModel.Email, cancellationToken))
-        //    {
-        //        throw new Exception("User already exist");
-        //    }
+        public async Task RegisterAsync(RegisterDto registerModel, CancellationToken cancellationToken = default)
+        {
+            if (await UnitOfWork.Repository<User>().ExistAsync(i => i.Email == registerModel.Email, cancellationToken))
+            {
+                throw new Exception("User already exist");
+            }
 
-        //    await UnitOfWork.Repository<User>().CreateAsync(new User
-        //    {
-        //        Email = registerModel.Email,
-        //        FirstName = registerModel.FirstName,
-        //        LastName = registerModel.LastName,
-        //        Phone = registerModel.Phone,
-        //        PasswordHash = BCrypt.Net.BCrypt.HashPassword(registerModel.Password),
-        //    }, cancellationToken);
+            await UnitOfWork.Repository<User>().CreateAsync(new User
+            {
+                Email = registerModel.Email,
+                FirstName = registerModel.FirstName,
+                LastName = registerModel.LastName,
+                Phone = registerModel.Phone,
+                PasswordHash = BCrypt.Net.BCrypt.HashPassword(registerModel.Password),
+            }, cancellationToken);
 
-        //    await UnitOfWork.SaveChangesAsync();
+            await UnitOfWork.SaveChangesAsync();
 
-        //    await _emailHelper.SendRegistrationEmailAsync(new UserDto
-        //    {
-        //        Email = registerModel.Email,
-        //        FirstName = registerModel.FirstName,
-        //        LastName = registerModel.LastName,
-        //    });
-        //}
+            await _emailHelper.SendRegistrationEmailAsync(new UserDto
+            {
+                Email = registerModel.Email,
+                FirstName = registerModel.FirstName,
+                LastName = registerModel.LastName,
+            });
+        }
 
-        //public async Task ConfirmRegistrationAsync(string registrationToken, CancellationToken cancellationToken = default)
-        //{
-        //    var user = await UnitOfWork.Repository<User>().GetFirstAsync(i => i.EmailToken == registrationToken, i => i, cancellationToken);
-        //    if (user == null)
-        //    {
-        //        // add custom exception;
-        //        throw new Exception("Token is invalid");
-        //    }
-        //    user.ActivatedDate = DateTime.UtcNow;
-        //    await UnitOfWork.SaveChangesAsync();
-        //}
+        public async Task ConfirmRegistrationAsync(string registrationToken, CancellationToken cancellationToken = default)
+        {
+            var user = await UnitOfWork.Repository<User>().GetFirstAsync(i => i.EmailToken == registrationToken, i => i, cancellationToken);
+            if (user == null)
+            {
+                // add custom exception;
+                throw new Exception("Token is invalid");
+            }
+            user.ActivatedDate = DateTime.UtcNow;
+            await UnitOfWork.SaveChangesAsync();
+        }
 
         //public async Task<AuthResultDto> LoginAsync(AuthDto auth, CancellationToken cancellationToken = default)
         //{
-        //    var user = await UnitOfWork.Repository<User>().GetFirstAsync(u => u.Email == auth.Email 
+        //    var user = await UnitOfWork.Repository<User>().GetFirstAsync(u => u.Email == auth.Email
         //                                                                && u.Group.Name == auth.GroupName,
         //        u => new UserDto
         //        {
         //            Id = u.Id,
         //            Email = u.Email,
         //            FirstName = u.FirstName,
-        //            LastName= u.LastName,
+        //            LastName = u.LastName,
         //            GroupId = u.Group.Id,
         //            GroupName = u.Group.Name,
         //            Phone = u.Phone,
@@ -166,15 +171,15 @@ namespace MasterAuth.Business.Services.Implementations
         //    return await Authenticate(userInstance, claimsPrincipal.Claims.ToArray());
         //}
 
-        //#endregion
+        #endregion
 
-        //#region Helpers
+        #region Helpers
 
-        //private async Task<bool> VerifyPasswordAsync(string email, string password)
-        //{
-        //    var userPassword = await UnitOfWork.Repository<User>().GetFirstAsync(i => i.Email == email, i => i.PasswordHash);
-        //    return BCrypt.Net.BCrypt.Verify(password, userPassword);
-        //}
+        private async Task<bool> VerifyPasswordAsync(string email, string password)
+        {
+            var userPassword = await UnitOfWork.Repository<User>().GetFirstAsync(i => i.Email == email, i => i.PasswordHash);
+            return BCrypt.Net.BCrypt.Verify(password, userPassword);
+        }
 
         //private void ValidateTokens(JwtSecurityToken jwt, RefreshToken refresh, Guid userId)
         //{
@@ -255,6 +260,6 @@ namespace MasterAuth.Business.Services.Implementations
         //    }
         //}
 
-        //#endregion
+        #endregion
     }
 }

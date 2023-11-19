@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace Schedule.Attributes
+namespace MasterAuth.Attributes
 {
     public class RouteV1Attribute : RouteAttribute
     {

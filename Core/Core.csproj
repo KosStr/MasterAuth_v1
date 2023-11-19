@@ -7,6 +7,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="EmailTemplates\PasswordChangeMail.cshtml" />
+    <None Remove="EmailTemplates\RegistrationMail.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="EmailTemplates\PasswordChangeMail.cshtml" />
+    <EmbeddedResource Include="EmailTemplates\RegistrationMail.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Autofac" Version="7.1.0" />
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="8.0.0" />
     <PackageReference Include="MailKit" Version="4.3.0" />

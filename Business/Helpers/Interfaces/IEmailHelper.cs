@@ -1,10 +1,14 @@
-﻿using MasterAuth.Business.Services.Interfaces;
+﻿
+using FluentEmail.Core.Models;
+using MasterAuth.Business.Services.Interfaces;
+using MasterAuth.Core.DTO.Account;
 
-namespace Business.Helpers.Interfaces
+namespace MasterAuth.Business.Helpers.Interfaces
 {
-    public interface IEmailHelper : IService
+    internal interface IEmailHelper : IService
     {
-        Task SendRegistrationEmailAsync();
-        Task SendPasswordChangeEmailAsync();
+        Task<SendResponse> SendRegistrationEmailAsync(UserDto user);
+        Task<SendResponse> SendConfirmationEmailAsync(UserDto user);
+        Task<SendResponse> SendPasswordChangeEmailAsync(UserDto user);
     }
 }

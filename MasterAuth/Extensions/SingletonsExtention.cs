@@ -6,12 +6,12 @@ namespace MasterAuth.Extensions
     {
         public static void AddSingletons(this WebApplicationBuilder builder)
         {
-            var jwtSettings = new JwtSettings();
-            builder.Configuration.GetSection("JwtSettings").Bind(jwtSettings);
-            builder.Services.AddSingleton(jwtSettings);
+            //var jwtSettings = new JwtSettings();
+            //builder.Configuration.GetSection("JwtSettings").Bind(jwtSettings);
+            //builder.Services.AddSingleton(jwtSettings);
 
             var emailSettings = new EmailConfig();
-            builder.Configuration.GetSection("EmailSettings").Bind(emailSettings);
+            builder.Configuration.GetSection("EmailConfig").Bind(emailSettings);
             builder.Services.AddSingleton(emailSettings);
         }
     }

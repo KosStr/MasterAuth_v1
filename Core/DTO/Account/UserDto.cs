@@ -1,8 +1,8 @@
 ﻿using MasterAuth.Core.Enums;
 
-namespace Core.DTOs.Account
+namespace MasterAuth.Core.DTO.Account
 {
-    public class UserDTO
+    public class UserDto
     {
         public string FirstName { get; set; } = String.Empty;
         public string LastName { get; set; } = String.Empty;
